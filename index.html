@@ -230,6 +230,233 @@ footer { background: var(--black); border-top: 1px solid var(--border); padding:
 @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @keyframes pulse-bar { 0%,100% { transform: scaleY(1); transform-origin: top; } 50% { transform: scaleY(.35); transform-origin: top; } }
+
+/* ══════════════════════════════════════
+   HAMBURGER MENU
+══════════════════════════════════════ */
+.hamburger {
+  display: none;
+  flex-direction: column; gap: 5px;
+  background: none; border: none; cursor: pointer; padding: 6px; z-index: 1100;
+}
+.hamburger span {
+  display: block; width: 26px; height: 2px;
+  background: var(--gold); border-radius: 2px;
+  transition: transform .35s, opacity .3s, width .3s;
+  transform-origin: center;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ══════════════════════════════════════
+   TABLET  —  max 1024px
+══════════════════════════════════════ */
+@media (max-width: 1024px) {
+  /* NAV */
+  nav { padding: 18px 32px; }
+  .nav-links { gap: 22px; }
+  .nav-links a { font-size: 10px; letter-spacing: 2px; }
+
+  /* SECTIONS */
+  .sec { padding: 80px 32px; }
+
+  /* ABOUT */
+  .about-grid { gap: 48px; }
+
+  /* SERVICES */
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* GALLERY */
+  .gallery-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 200px 200px 200px;
+  }
+  .gal-cell.tall { grid-row: span 1; }
+
+  /* PACKAGES */
+  .pkg-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* PRICE MENU */
+  .menu-tabs { gap: 4px; }
+  .tab { padding: 12px 18px; font-size: 11px; }
+
+  /* TESTIMONIALS */
+  .testi-grid { gap: 16px; }
+
+  /* INFO BAR */
+  .infobar-inner { grid-template-columns: repeat(2,1fr); gap: 36px; }
+
+  /* FOOTER */
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+
+  /* BOOKING CTA */
+  .call-cards { gap: 16px; }
+  .call-card { min-width: 200px; padding: 28px 36px; }
+  .call-card .call-num { font-size: 24px; }
+}
+
+/* ══════════════════════════════════════
+   TABLET PORTRAIT  —  max 768px
+══════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Disable custom cursor on touch */
+  body { cursor: auto; }
+  #cur, #cur-r { display: none; }
+
+  /* NAV — mobile slide-in */
+  nav { padding: 16px 20px; background: rgba(8,8,8,.97); backdrop-filter: blur(16px); }
+  .hamburger { display: flex; }
+  .nav-links {
+    position: fixed; top: 0; right: -100%; bottom: 0;
+    width: min(300px, 80vw);
+    background: #0F0E0A;
+    border-left: 1px solid var(--border);
+    flex-direction: column; align-items: flex-start;
+    justify-content: center; gap: 0;
+    padding: 80px 32px 40px;
+    transition: right .4s cubic-bezier(.4,0,.2,1);
+    z-index: 1050;
+    list-style: none;
+  }
+  .nav-links.open { right: 0; }
+  .nav-links li { width: 100%; border-bottom: 1px solid var(--border); }
+  .nav-links a {
+    display: block; padding: 18px 0;
+    font-size: 13px; letter-spacing: 4px; color: var(--white);
+  }
+  .nav-links a::after { display: none; }
+  .nav-links a:hover { color: var(--gold); }
+  .btn-book {
+    display: block; margin-top: 28px; text-align: center;
+    padding: 16px 0 !important; width: 100%;
+    background: var(--gold) !important; color: var(--black) !important;
+  }
+  /* Nav overlay */
+  .nav-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.55); z-index: 1040;
+  }
+  .nav-overlay.open { display: block; }
+
+  /* HERO */
+  .hero { min-height: 100svh; }
+  .eyebrow { font-size: 8px; letter-spacing: 4px; gap: 8px; margin-bottom: 18px; }
+  .eyebrow i { width: 20px; }
+  .hero-h1 { font-size: clamp(56px, 16vw, 96px); letter-spacing: -1px; }
+  .hero-tag { font-size: 12px; letter-spacing: 3px; }
+  .hero-sep { height: 40px; margin: 28px auto; }
+  .hero-actions { flex-direction: column; gap: 14px; }
+  .btn-primary, .btn-outline { padding: 16px 32px; font-size: 12px; width: 100%; max-width: 300px; justify-content: center; text-align: center; }
+
+  /* SECTIONS */
+  .sec { padding: 64px 20px; }
+  .sec-label { font-size: 9px; letter-spacing: 4px; }
+  h2.sec-title { font-size: clamp(32px, 8vw, 52px); }
+
+  /* ABOUT */
+  .about-grid { grid-template-columns: 1fr; gap: 48px; }
+  .about-pill { width: 90px; height: 90px; bottom: -16px; right: -10px; }
+  .about-pill strong { font-size: 26px; }
+  .about-stats { grid-template-columns: repeat(3,1fr); gap: 16px; }
+  .stat strong { font-size: 32px; }
+  .stat span { font-size: 8px; letter-spacing: 2px; }
+
+  /* SERVICES */
+  .services-grid { grid-template-columns: 1fr; }
+  .svc-img { height: 200px; }
+
+  /* GALLERY */
+  .gallery-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 160px);
+  }
+  .gal-cell.tall { grid-row: span 1; }
+
+  /* PACKAGES */
+  .pkg-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+  .pkg { padding: 32px 20px; }
+  .pkg-name { font-size: 18px; }
+  .pkg-price { font-size: 36px; }
+  .pkg-features li { font-size: 12px; }
+
+  /* PRICE MENU */
+  .menu-tabs { display: grid; grid-template-columns: repeat(2,1fr); gap: 2px; margin-bottom: 36px; }
+  .tab { padding: 12px 10px; font-size: 10px; letter-spacing: 1.5px; text-align: center; }
+  .menu-panel.active { grid-template-columns: 1fr; }
+  .menu-row .item { font-size: 13px; }
+
+  /* TESTIMONIALS */
+  .testi-grid { grid-template-columns: 1fr; }
+  .tcard { padding: 32px 24px; }
+
+  /* BOOKING CTA */
+  .booking-cta-inner { padding: 80px 20px; }
+  .call-cards { flex-direction: column; align-items: center; gap: 16px; }
+  .call-card { width: 100%; max-width: 320px; min-width: unset; padding: 28px 24px; }
+  .call-card .call-num { font-size: 22px; }
+  .social-row { flex-direction: column; align-items: center; gap: 12px; }
+  .social-btn { width: 100%; max-width: 320px; justify-content: center; }
+
+  /* INFO BAR */
+  .infobar { padding: 48px 20px; }
+  .infobar-inner { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .info-block .val { font-size: 15px; }
+
+  /* FOOTER */
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  footer { padding: 56px 20px 32px; }
+  .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+
+  /* GALLERY */
+  .gallery { padding: 64px 20px; }
+}
+
+/* ══════════════════════════════════════
+   MOBILE  —  max 480px
+══════════════════════════════════════ */
+@media (max-width: 480px) {
+  /* HERO */
+  .hero-h1 { font-size: clamp(52px, 17vw, 80px); }
+  .hero-tag { font-size: 10px; letter-spacing: 2px; }
+  .hero-sep { display: none; }
+
+  /* ABOUT */
+  .about-stats { grid-template-columns: repeat(3,1fr); gap: 10px; }
+  .stat strong { font-size: 28px; }
+
+  /* PACKAGES */
+  .pkg-grid { grid-template-columns: 1fr; }
+  .pkg.featured { order: -1; }
+
+  /* PRICE MENU */
+  .menu-tabs { grid-template-columns: 1fr 1fr; }
+  .tab { font-size: 9px; letter-spacing: 1px; padding: 10px 8px; }
+
+  /* INFO BAR */
+  .infobar-inner { grid-template-columns: 1fr; gap: 24px; }
+
+  /* GALLERY */
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(5, 180px);
+  }
+
+  /* BOOKING */
+  .booking-tagline { font-size: 16px; }
+  .call-card .call-num { font-size: 20px; }
+}
+
+/* ══════════════════════════════════════
+   LARGE DESKTOP  —  min 1400px
+══════════════════════════════════════ */
+@media (min-width: 1400px) {
+  .sec { padding: 130px 80px; }
+  nav { padding: 24px 80px; }
+  .about-grid, .services-inner, .packages-inner, .menu-inner,
+  .testi-inner, .gallery-inner, .infobar-inner, .footer-grid { max-width: 1440px; }
+  .booking-cta-inner { max-width: 1000px; }
+}
 </style>
 </head>
 <body>
@@ -245,14 +472,19 @@ footer { background: var(--black); border-top: 1px solid var(--border); padding:
       <span>The Salon · Hyderabad</span>
     </div>
   </a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#menu">Price Menu</a></li>
-    <li><a href="#packages">Packages</a></li>
-    <li><a href="#booking" class="btn-book">Book Now</a></li>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about" onclick="closeMenu()">About</a></li>
+    <li><a href="#services" onclick="closeMenu()">Services</a></li>
+    <li><a href="#menu" onclick="closeMenu()">Price Menu</a></li>
+    <li><a href="#packages" onclick="closeMenu()">Packages</a></li>
+    <li><a href="#booking" class="btn-book" onclick="closeMenu()">Book Now</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="nav-overlay" id="navOverlay" onclick="closeMenu()"></div>
 
 <!-- HERO -->
 <section class="hero">
@@ -673,7 +905,7 @@ footer { background: var(--black); border-top: 1px solid var(--border); padding:
     <div class="social-row rev d4">
       <a href="#" class="social-btn"><span>📘</span> Facebook: His The Salon</a>
       <a href="#" class="social-btn"><span>📸</span> Instagram: His The Salon</a>
-      <a href="mailto:histhesalon@gmail.com" class="social-btn"><span>✉️</span> histhesalon@gmail.com</a>
+      <a href="/cdn-cgi/l/email-protection#167e7f65627e7365777a797856717b777f7a3875797b" class="social-btn"><span>✉️</span> <span class="__cf_email__" data-cfemail="5a3233292e323f293b3635341a3d373b333674393537">[email&#160;protected]</span></a>
     </div>
   </div>
 </section>
@@ -683,7 +915,7 @@ footer { background: var(--black); border-top: 1px solid var(--border); padding:
   <div class="infobar-inner">
     <div class="info-block rev"><div class="ico">📍</div><div class="lbl">Location</div><div class="val">HIS The Salon<br>Hyderabad, Telangana</div></div>
     <div class="info-block rev d1"><div class="ico">📞</div><div class="lbl">Phone</div><div class="val"><a href="tel:+918143386294">+91 81433 86294</a><br><a href="tel:+919966488103">+91 99664 88103</a></div></div>
-    <div class="info-block rev d2"><div class="ico">✉️</div><div class="lbl">Email</div><div class="val"><a href="mailto:histhesalon@gmail.com">histhesalon@gmail.com</a></div></div>
+    <div class="info-block rev d2"><div class="ico">✉️</div><div class="lbl">Email</div><div class="val"><a href="/cdn-cgi/l/email-protection#d3bbbaa0a7bbb6a0b2bfbcbd93b4beb2babffdb0bcbe"><span class="__cf_email__" data-cfemail="ea8283999e828f998b868584aa8d878b8386c4898587">[email&#160;protected]</span></a></div></div>
     <div class="info-block rev d3"><div class="ico">🕐</div><div class="lbl">Hours</div><div class="val">Mon – Sat: 9am – 9pm<br>Sunday: 10am – 7pm</div></div>
   </div>
 </div>
@@ -698,7 +930,7 @@ footer { background: var(--black); border-top: 1px solid var(--border); padding:
     </div>
     <div class="footer-col"><h4>Services</h4><ul><li><a href="#">Haircuts</a></li><li><a href="#">Beard &amp; Shaves</a></li><li><a href="#">Facials</a></li><li><a href="#">Hair Spa</a></li><li><a href="#">Grooming Packages</a></li></ul></div>
     <div class="footer-col"><h4>Explore</h4><ul><li><a href="#">About Us</a></li><li><a href="#">Price Menu</a></li><li><a href="#">Gallery</a></li><li><a href="#">Packages</a></li><li><a href="#">Contact</a></li></ul></div>
-    <div class="footer-col"><h4>Connect</h4><ul><li><a href="#">Facebook: His The Salon</a></li><li><a href="#">Instagram: His The Salon</a></li><li><a href="mailto:histhesalon@gmail.com">histhesalon@gmail.com</a></li><li><a href="#">Google Maps</a></li></ul></div>
+    <div class="footer-col"><h4>Connect</h4><ul><li><a href="#">Facebook: His The Salon</a></li><li><a href="#">Instagram: His The Salon</a></li><li><a href="/cdn-cgi/l/email-protection#442c2d37302c213725282b2a042329252d286a272b29"><span class="__cf_email__" data-cfemail="cba3a2b8bfa3aeb8aaa7a4a58baca6aaa2a7e5a8a4a6">[email&#160;protected]</span></a></li><li><a href="#">Google Maps</a></li></ul></div>
   </div>
   <div class="footer-bottom">
     <p>© 2026 HIS The Salon™ · All Rights Reserved · Hyderabad</p>
@@ -707,18 +939,40 @@ footer { background: var(--black); border-top: 1px solid var(--border); padding:
 </footer>
 
 <script>
+// Custom cursor (desktop only)
 const cur = document.getElementById('cur'), ring = document.getElementById('cur-r');
 let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cur.style.left=mx+'px'; cur.style.top=my+'px'; });
-(function loop(){ rx+=(mx-rx)*.1; ry+=(my-ry)*.1; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
-document.querySelectorAll('a,button,.svc,.tcard,.pkg,.gal-cell,.call-card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{ cur.style.transform='translate(-50%,-50%) scale(2.5)'; ring.style.transform='translate(-50%,-50%) scale(1.6)'; });
-  el.addEventListener('mouseleave',()=>{ cur.style.transform='translate(-50%,-50%) scale(1)'; ring.style.transform='translate(-50%,-50%) scale(1)'; });
-});
+if (window.matchMedia('(pointer: fine)').matches) {
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cur.style.left=mx+'px'; cur.style.top=my+'px'; });
+  (function loop(){ rx+=(mx-rx)*.1; ry+=(my-ry)*.1; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
+  document.querySelectorAll('a,button,.svc,.tcard,.pkg,.gal-cell,.call-card').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{ cur.style.transform='translate(-50%,-50%) scale(2.5)'; ring.style.transform='translate(-50%,-50%) scale(1.6)'; });
+    el.addEventListener('mouseleave',()=>{ cur.style.transform='translate(-50%,-50%) scale(1)'; ring.style.transform='translate(-50%,-50%) scale(1)'; });
+  });
+}
+// Nav scroll
 const nav = document.getElementById('nav');
 window.addEventListener('scroll',()=>{ nav.classList.toggle('scrolled', scrollY>60); });
-const obs = new IntersectionObserver(entries=>entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('on'); }),{threshold:.1});
+// Hamburger menu
+function toggleMenu() {
+  const links = document.getElementById('navLinks');
+  const burger = document.getElementById('hamburger');
+  const overlay = document.getElementById('navOverlay');
+  const isOpen = links.classList.toggle('open');
+  burger.classList.toggle('open', isOpen);
+  overlay.classList.toggle('open', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+function closeMenu() {
+  document.getElementById('navLinks').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('navOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+// Scroll reveal
+const obs = new IntersectionObserver(entries=>entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('on'); }),{threshold:.08});
 document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
+// Price menu tabs
 function showTab(id, btn){
   document.querySelectorAll('.menu-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
