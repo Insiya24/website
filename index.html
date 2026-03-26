@@ -232,6 +232,88 @@ footer { background: var(--black); border-top: 1px solid var(--border); padding:
 @keyframes pulse-bar { 0%,100% { transform: scaleY(1); transform-origin: top; } 50% { transform: scaleY(.35); transform-origin: top; } }
 
 /* ══════════════════════════════════════
+   BRANCHES / LOCATIONS
+══════════════════════════════════════ */
+.branches { background: var(--black); }
+.branches-inner { max-width: 1240px; margin: 0 auto; }
+.branches-sub {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 18px; color: var(--muted); margin-bottom: 64px; margin-top: 8px;
+}
+.branches-layout {
+  display: grid; grid-template-columns: 1fr 1.3fr; gap: 4px;
+  align-items: stretch; min-height: 600px;
+}
+
+/* Branch list */
+.branch-list { display: flex; flex-direction: column; background: var(--dark); }
+.branch-item {
+  display: grid; grid-template-columns: 48px 1fr 28px;
+  align-items: center; gap: 16px;
+  padding: 20px 28px;
+  border-bottom: 1px solid rgba(201,168,76,.1);
+  cursor: pointer; transition: background .25s, padding-left .25s;
+  position: relative;
+}
+.branch-item::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 0; background: var(--gold);
+  transition: width .3s cubic-bezier(.4,0,.2,1);
+}
+.branch-item:hover, .branch-item.active { background: #1a1508; padding-left: 36px; }
+.branch-item:hover::before, .branch-item.active::before { width: 3px; }
+.branch-num {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 12px;
+  font-weight: 700; color: rgba(201,168,76,.4); letter-spacing: 2px;
+  transition: color .25s;
+}
+.branch-item:hover .branch-num, .branch-item.active .branch-num { color: var(--gold); }
+.branch-name {
+  font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700;
+  color: rgba(250,247,240,.8); margin-bottom: 3px; transition: color .25s;
+}
+.branch-item:hover .branch-name, .branch-item.active .branch-name { color: var(--white); }
+.branch-addr { font-size: 12px; font-weight: 400; color: var(--muted); line-height: 1.5; }
+.branch-meta { display: flex; align-items: center; gap: 10px; margin-top: 5px; }
+.branch-rating { font-size: 11px; font-weight: 700; color: var(--gold); }
+.branch-tag { font-size: 10px; font-weight: 500; color: rgba(138,128,112,.6); letter-spacing: 1px; }
+.branch-arrow {
+  font-size: 14px; color: rgba(201,168,76,.25); font-weight: 700;
+  transition: color .25s, transform .25s;
+}
+.branch-item:hover .branch-arrow, .branch-item.active .branch-arrow {
+  color: var(--gold); transform: translateX(4px);
+}
+
+/* Map panel */
+.branch-map-wrap {
+  position: relative; background: var(--card);
+  display: flex; flex-direction: column;
+}
+.map-badge {
+  background: var(--gold); color: var(--black);
+  font-family: 'Barlow Condensed', sans-serif; font-size: 11px;
+  font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+  padding: 12px 24px; display: flex; align-items: center; gap: 8px;
+}
+.map-badge::before { content: '📍'; font-size: 14px; }
+.branch-map {
+  flex: 1; width: 100%; border: none; min-height: 480px;
+  filter: grayscale(30%) contrast(1.1);
+  transition: filter .4s;
+}
+.branch-map-wrap:hover .branch-map { filter: grayscale(0%) contrast(1); }
+.map-directions {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  background: rgba(8,8,8,.9); border-top: 1px solid var(--border);
+  color: var(--gold); text-decoration: none;
+  font-family: 'Barlow Condensed', sans-serif; font-size: 12px;
+  font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+  padding: 16px; transition: background .3s;
+}
+.map-directions:hover { background: var(--gold); color: var(--black); }
+
+/* ══════════════════════════════════════
    HAMBURGER MENU
 ══════════════════════════════════════ */
 .hamburger {
@@ -353,6 +435,12 @@ footer { background: var(--black); border-top: 1px solid var(--border); padding:
   .sec { padding: 64px 20px; }
   .sec-label { font-size: 9px; letter-spacing: 4px; }
   h2.sec-title { font-size: clamp(32px, 8vw, 52px); }
+
+  /* BRANCHES */
+  .branches-layout { grid-template-columns: 1fr; }
+  .branch-map-wrap { min-height: 400px; }
+  .branch-map { min-height: 340px; }
+  .branch-item { padding: 16px 20px; }
 
   /* ABOUT */
   .about-grid { grid-template-columns: 1fr; gap: 48px; }
@@ -477,6 +565,7 @@ footer { background: var(--black); border-top: 1px solid var(--border); padding:
     <li><a href="#services" onclick="closeMenu()">Services</a></li>
     <li><a href="#menu" onclick="closeMenu()">Price Menu</a></li>
     <li><a href="#packages" onclick="closeMenu()">Packages</a></li>
+    <li><a href="#branches" onclick="closeMenu()">Branches</a></li>
     <li><a href="#booking" class="btn-book" onclick="closeMenu()">Book Now</a></li>
   </ul>
   <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
@@ -910,6 +999,123 @@ footer { background: var(--black); border-top: 1px solid var(--border); padding:
   </div>
 </section>
 
+<!-- BRANCHES / LOCATIONS -->
+<section class="branches sec" id="branches">
+  <div class="branches-inner">
+    <div class="sec-label rev">Find Us</div>
+    <h2 class="sec-title rev d1">Our <em>Branches</em> Across Hyderabad</h2>
+    <p class="branches-sub rev d2">10 locations across the city — there's always a HIS The Salon near you.</p>
+
+    <div class="branches-layout">
+      <!-- LEFT: branch list -->
+      <div class="branch-list">
+        <div class="branch-item active" onclick="selectBranch(this, 0)">
+          <div class="branch-num">01</div>
+          <div class="branch-info">
+            <div class="branch-name">Srinagar Colony</div>
+            <div class="branch-addr">Opp Kismat Mall, Engineers Colony, Yella Reddy Guda</div>
+            <div class="branch-meta"><span class="branch-rating">★ 4.4</span><span class="branch-tag">506 Reviews</span></div>
+          </div>
+          <div class="branch-arrow">→</div>
+        </div>
+        <div class="branch-item" onclick="selectBranch(this, 1)">
+          <div class="branch-num">02</div>
+          <div class="branch-info">
+            <div class="branch-name">Toli Chowki</div>
+            <div class="branch-addr">7 Tombs Rd, Arvind Nagar Colony</div>
+            <div class="branch-meta"><span class="branch-rating">★ 4.3</span><span class="branch-tag">575 Reviews</span></div>
+          </div>
+          <div class="branch-arrow">→</div>
+        </div>
+        <div class="branch-item" onclick="selectBranch(this, 2)">
+          <div class="branch-num">03</div>
+          <div class="branch-info">
+            <div class="branch-name">Masab Tank</div>
+            <div class="branch-addr">Vijaynagar Colony, Near Al Qaswa Hotel</div>
+            <div class="branch-meta"><span class="branch-rating">★ 4.6</span><span class="branch-tag">217 Reviews</span></div>
+          </div>
+          <div class="branch-arrow">→</div>
+        </div>
+        <div class="branch-item" onclick="selectBranch(this, 3)">
+          <div class="branch-num">04</div>
+          <div class="branch-info">
+            <div class="branch-name">Sanjeeva Reddy Nagar</div>
+            <div class="branch-addr">BK Guda, Opp Lucky Spice Hotel</div>
+            <div class="branch-meta"><span class="branch-rating">★ 4.5</span><span class="branch-tag">121 Reviews</span></div>
+          </div>
+          <div class="branch-arrow">→</div>
+        </div>
+        <div class="branch-item" onclick="selectBranch(this, 4)">
+          <div class="branch-num">05</div>
+          <div class="branch-info">
+            <div class="branch-name">Balkampet</div>
+            <div class="branch-addr">Near Andhra Bank, Prashanth Colony</div>
+            <div class="branch-meta"><span class="branch-rating">★ 4.2</span><span class="branch-tag">66 Reviews</span></div>
+          </div>
+          <div class="branch-arrow">→</div>
+        </div>
+        <div class="branch-item" onclick="selectBranch(this, 5)">
+          <div class="branch-num">06</div>
+          <div class="branch-info">
+            <div class="branch-name">Noorkhan Bazaar</div>
+            <div class="branch-addr">Sultanpura, Darulshifa</div>
+            <div class="branch-meta"><span class="branch-rating">★ 4.6</span><span class="branch-tag">42 Reviews</span></div>
+          </div>
+          <div class="branch-arrow">→</div>
+        </div>
+        <div class="branch-item" onclick="selectBranch(this, 6)">
+          <div class="branch-num">07</div>
+          <div class="branch-info">
+            <div class="branch-name">Attapur</div>
+            <div class="branch-addr">Rambagh, Kishan Bagh Road</div>
+            <div class="branch-meta"><span class="branch-rating">★ 4.7</span><span class="branch-tag">47 Reviews</span></div>
+          </div>
+          <div class="branch-arrow">→</div>
+        </div>
+        <div class="branch-item" onclick="selectBranch(this, 7)">
+          <div class="branch-num">08</div>
+          <div class="branch-info">
+            <div class="branch-name">Saleem Nagar</div>
+            <div class="branch-addr">Swathi Apartment, Old Malakpet</div>
+            <div class="branch-meta"><span class="branch-rating">★ 4.0</span><span class="branch-tag">4 Reviews</span></div>
+          </div>
+          <div class="branch-arrow">→</div>
+        </div>
+        <div class="branch-item" onclick="selectBranch(this, 8)">
+          <div class="branch-num">09</div>
+          <div class="branch-info">
+            <div class="branch-name">Saidabad</div>
+            <div class="branch-addr">Sai Ganga Colony, Jaya Nagar</div>
+            <div class="branch-meta"><span class="branch-rating">★ 4.2</span><span class="branch-tag">37 Reviews</span></div>
+          </div>
+          <div class="branch-arrow">→</div>
+        </div>
+        <div class="branch-item" onclick="selectBranch(this, 9)">
+          <div class="branch-num">10</div>
+          <div class="branch-info">
+            <div class="branch-name">Bandlaguda</div>
+            <div class="branch-addr">Keerthi Richmond Villas, Sun City</div>
+            <div class="branch-meta"><span class="branch-rating">★ 4.3</span><span class="branch-tag">44 Reviews</span></div>
+          </div>
+          <div class="branch-arrow">→</div>
+        </div>
+      </div>
+
+      <!-- RIGHT: map -->
+      <div class="branch-map-wrap">
+        <div class="map-badge"><span id="mapBranchName">Srinagar Colony</span></div>
+        <iframe id="branchMap" class="branch-map"
+          src="https://www.google.com/maps?q=17.4351379,78.4352665&z=16&output=embed"
+          allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+        <a id="branchDirections" class="map-directions" href="https://www.google.com/maps?q=17.4351379,78.4352665" target="_blank">
+          Get Directions →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- INFO BAR -->
 <div class="infobar">
   <div class="infobar-inner">
@@ -972,7 +1178,30 @@ function closeMenu() {
 // Scroll reveal
 const obs = new IntersectionObserver(entries=>entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('on'); }),{threshold:.08});
 document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
-// Price menu tabs
+// Branch locations data
+const branches = [
+  { name: 'Srinagar Colony',      lat: 17.4351379,  lng: 78.4352665  },
+  { name: 'Toli Chowki',          lat: 17.4013734,  lng: 78.400601   },
+  { name: 'Masab Tank',           lat: 17.3933402,  lng: 78.4496256  },
+  { name: 'Sanjeeva Reddy Nagar', lat: 17.4495341,  lng: 78.4459257  },
+  { name: 'Balkampet',            lat: 17.4442993,  lng: 78.4491485  },
+  { name: 'Noorkhan Bazaar',      lat: 17.3731031,  lng: 78.4843986  },
+  { name: 'Attapur',              lat: 17.3628239,  lng: 78.4314709  },
+  { name: 'Saleem Nagar',         lat: 17.374368,   lng: 78.5109921  },
+  { name: 'Saidabad',             lat: 17.3587832,  lng: 78.5185127  },
+  { name: 'Bandlaguda',           lat: 17.3614467,  lng: 78.3993424  },
+];
+function selectBranch(el, idx) {
+  document.querySelectorAll('.branch-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  const b = branches[idx];
+  document.getElementById('branchMap').src =
+    `https://www.google.com/maps?q=${b.lat},${b.lng}&z=16&output=embed`;
+  document.getElementById('mapBranchName').textContent = b.name;
+  document.getElementById('branchDirections').href =
+    `https://www.google.com/maps?q=${b.lat},${b.lng}`;
+}
+
 function showTab(id, btn){
   document.querySelectorAll('.menu-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
